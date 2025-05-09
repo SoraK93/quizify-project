@@ -1,0 +1,22 @@
+{
+  "name": "quizify-project",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SoraK93/quizify-project.git"
+  },
+  "author": "Sourabh Kheria",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SoraK93/quizify-project/issues"
+  },
+  "homepage": "https://github.com/SoraK93/quizify-project#readme",
+  "description": "",
+  "dependencies": {
+    "readline-sync": "^1.4.10"
+  }
+}
