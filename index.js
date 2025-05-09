@@ -2,6 +2,7 @@ const readlineSync = require("readline-sync");
 
 let score = 0;
 
+/** Creating Database */
 const database = {
   category: {
     name: "Javascript",
@@ -38,6 +39,7 @@ const database = {
   },
 };
 
+/** Creating Leader Board */
 const leaderBoard = {
   data: [
     {
@@ -55,6 +57,7 @@ const leaderBoard = {
   ],
 };
 
+/** Checks whether users answer is correct or incorrect */
 function playGame(userAnswer, correctAnswer) {
   if (userAnswer === correctAnswer) {
     console.log("Correct Answer\n");
@@ -65,6 +68,7 @@ function playGame(userAnswer, correctAnswer) {
   }
 }
 
+/** Reads through our database and gets all the relevent question, options which is required to ask questions from the user */
 function showQuestionAndOptions(database) {
   for (let i = 0, n = database.category.data.length; i < n; i++) {
     let data = database.category.data[i];
@@ -89,6 +93,7 @@ function showQuestionAndOptions(database) {
   }
 }
 
+/** Use leader board data to get the high score, if user agrees to the prompt */
 function highScorer(leaderBoard) {
     leaderBoard.data.push({name: userName, score: score});
     leaderBoard.data.sort((a, b) => b.score - a.score);
@@ -107,8 +112,10 @@ function highScorer(leaderBoard) {
     console.log(`Name: ${leaderBoard.data[0].name}\nHigh Score: ${leaderBoard.data[0].score}`);
 }
 
+/** Stores users name, later stored in leaderboard */
 let userName = readlineSync.question("Enter your name: ");
 
+// Runs the game
 showQuestionAndOptions(database);
 console.log(`Your score: ${score}\n`);
 highScorer(leaderBoard);
