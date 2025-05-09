@@ -1,4 +1,5 @@
 const readlineSync = require("readline-sync");
+let kuler = require("kuler");
 
 let score = 0;
 
@@ -60,32 +61,36 @@ const leaderBoard = {
 /** Checks whether users answer is correct or incorrect */
 function playGame(userAnswer, correctAnswer) {
   if (userAnswer === correctAnswer) {
-    console.log("Correct Answer\n");
+    console.log(kuler("Correct Answer", "#10B981"));
     score++;
   } else {
-    console.log("Incorrect Answer");
-    console.log(`Correct Answer is ${correctAnswer}.\n`);
+    console.log(kuler("Incorrect Answer", "#DC2626"));
+    console.log(kuler(`Correct Answer is ${correctAnswer}.`, "#2DD4BF"));
   }
 }
 
-/** Reads through our database and gets all the relevent question, options which is required to ask questions from the user */
+/** Reads through given database and gets all the relevent question, options which is required to ask questions from the user */
 function showQuestionAndOptions(database) {
   for (let i = 0, n = database.category.data.length; i < n; i++) {
     let data = database.category.data[i];
-    console.log(`Q${i + 1} - ${data.question}\n`);
+    console.log(kuler(`Q${i + 1} - ${data.question}\n`, "#06B6D4"));
 
     for (let key in data.options) {
-      console.log(`${key}. ${data.options[key]}`);
+      console.log(kuler(`${key}. ${data.options[key]}\n`, "#06B6D4"));
     }
-    console.log();
 
     let userAnswer;
     do {
       userAnswer = readlineSync
-        .question("Enter your answer (a/b/c/d) - ")
+        .question(kuler("Enter your answer (a/b/c/d) - ", "#FCD34D"))
         .toLowerCase();
       if (!Object.keys(data.options).includes(userAnswer)) {
-        console.log("Invalid option selected. Please check and try again.\n");
+        console.log(
+          kuler(
+            "Invalid option selected. Please check and try again.\n",
+            "#DC2626"
+          )
+        );
       }
     } while (!Object.keys(data.options).includes(userAnswer));
 
@@ -95,28 +100,37 @@ function showQuestionAndOptions(database) {
 
 /** Use leader board data to get the high score, if user agrees to the prompt */
 function highScorer(leaderBoard) {
-    leaderBoard.data.push({name: userName, score: score});
-    leaderBoard.data.sort((a, b) => b.score - a.score);
-    let checkHighScore;
-    do {
-        checkHighScore = readlineSync.question("Do you want to check high score? (Y/N)\n").toLowerCase();
-        if (checkHighScore === "y") {
-            for (let score of leaderBoard.data) {
-                console.log(`Name: ${score.name} Score: ${score.score}\n`);
-            }
-        } else {
-            console.log("Please, enter Y/N to check high score.\n");
-        }
-    } while (!"y/n".includes(checkHighScore));
+  leaderBoard.data.push({ name: userName, score: score });
+  leaderBoard.data.sort((a, b) => b.score - a.score);
 
-    console.log(`Name: ${leaderBoard.data[0].name}\nHigh Score: ${leaderBoard.data[0].score}`);
+  if (score > leaderBoard.data[0].score) {
+    console.log(
+      kuler(`Congratulation! New High Score\nName: ${leaderBoard.data[0].name}\nHigh Score: ${leaderBoard.data[0].score}`, "#F59E0B")
+    );
+  };
+
+  let checkHighScore;
+  do {
+    checkHighScore = readlineSync
+      .question(kuler("Do you want to check high score? (Y/N)\n", "#FCD34D"))
+      .toLowerCase();
+    if (checkHighScore === "y") {
+      for (let score of leaderBoard.data) {
+        console.log(
+          kuler(`Name: ${score.name} Score: ${score.score}\n`, "#D946EF")
+        );
+      }
+    } else {
+      console.log(kuler("Please, enter Y/N to check high score.\n", "#DC2626"));
+    }
+  } while (!"y/n".includes(checkHighScore));
 }
 
 /** Stores users name, later stored in leaderboard */
-let userName = readlineSync.question("Enter your name: ");
+let userName = readlineSync.question(kuler("Enter your name: ", "#FCD34D"));
+console.log(kuler(`Hello ${userName}, Welcome to Quizify.`, "#FDE68A"));
 
 // Runs the game
 showQuestionAndOptions(database);
 console.log(`Your score: ${score}\n`);
 highScorer(leaderBoard);
-

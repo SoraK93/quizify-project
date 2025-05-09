@@ -17,6 +17,7 @@
   "homepage": "https://github.com/SoraK93/quizify-project#readme",
   "description": "",
   "dependencies": {
+    "kuler": "^2.0.0",
     "readline-sync": "^1.4.10"
   }
 }
